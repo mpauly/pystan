@@ -198,7 +198,7 @@ class StanModel:
     def __init__(self, file=None, charset='utf-8', model_name="anon_model",
                  model_code=None, stanc_ret=None, boost_lib=None,
                  eigen_lib=None, verbose=False, obfuscate_model_name=True,
-                 extra_compile_args=None):
+                 extra_compile_args=None, more_compile_args={}):
 
         if stanc_ret is None:
             stanc_ret = pystan.api.stanc(file=file,
@@ -288,7 +288,8 @@ class StanModel:
                               sources=[pyx_file],
                               define_macros=stan_macros,
                               include_dirs=include_dirs,
-                              extra_compile_args=extra_compile_args)
+                              extra_compile_args=extra_compile_args,
+                              **more_compile_args)
 
         cython_include_dirs = ['.', pystan_dir]
         build_extension = _get_build_extension()
